@@ -1,0 +1,21 @@
+AVSPProject/
+|-- AVSPProject.sln          # Visual Studio solution file
+|-- AVSPProject/             # Main project folder
+    |-- App.xaml             # Entry point for the application
+    |-- App.xaml.cs          # Code-behind for App.xaml
+    |-- MainWindow.xaml      # Main window XAML file
+    |-- MainWindow.xaml.cs   # Code-behind for MainWindow.xaml
+    |-- Properties/          # Folder for project properties
+        |-- AssemblyInfo.cs  # Assembly information file
+    |-- ViewModels/          # Folder for view models
+        |-- MainViewModel.cs # View model for the main window
+    |-- Models/              # Folder for data models
+        |-- VideoProcessor.cs # Class for video processing logic
+    |-- Helpers/             # Folder for utility/helper classes
+        |-- FileHelper.cs    # Class for file-related operations
+    |-- Resources/           # Folder for static resources
+        |-- Images/          # Folder for image assets
+    |-- Packages/            # NuGet package references
+|-- Packages/                # NuGet package cache (auto-generated)
+|-- bin/                     # Output folder for compiled binaries
+|-- obj/                     # Output folder for intermediate build files
