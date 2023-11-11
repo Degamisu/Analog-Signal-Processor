@@ -6,4 +6,4 @@
         <!-- Your oscilloscope visualization goes here -->
         <!-- You can use a Canvas, Plot control, or other graphical elements -->
     </Grid>
-</Window>
+<window>

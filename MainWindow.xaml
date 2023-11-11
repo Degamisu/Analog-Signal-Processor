@@ -25,5 +25,11 @@
         <Grid Grid.Row="1" Background="#FF303437">
             <!-- Your main content goes here -->
         </Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+    <TextBlock Text="Interference Settings" Margin="10"/>
+    <Slider x:Name="MainRedInterferenceSlider" Header="Red" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+    <Slider x:Name="MainGreenInterferenceSlider" Header="Green" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+    <Slider x:Name="MainBlueInterferenceSlider" Header="Blue" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+</StackPanel>
     </Grid>
 </Window>
