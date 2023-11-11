@@ -9,14 +9,13 @@
         </Grid.RowDefinitions>
 
         <!-- Main menu -->
-        <Menu>
-            <MenuItem Header="File">
+        <Menu Background="#FF515E63">
+            <MenuItem Header="File" Foreground="White">
                 <MenuItem Header="Open" Click="OpenButton_Click"/>
                 <MenuItem Header="Exit" Click="ExitButton_Click"/>
             </MenuItem>
-            <MenuItem Header="View">
+            <MenuItem Header="View" Foreground="White">
                 <MenuItem Header="Image Viewer" Click="OpenImageViewer_Click"/>
-                <!-- Add the OscilloscopeWindow to the View menu -->
                 <MenuItem Header="Oscilloscope" Click="OpenOscilloscope_Click"/>
             </MenuItem>
         </Menu>
@@ -24,12 +23,19 @@
         <!-- Main content grid with two columns -->
         <Grid Grid.Row="1" Background="#FF303437">
             <!-- Your main content goes here -->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
+                <TextBlock Text="Interference Settings" Foreground="White"/>
+                <Slider x:Name="MainRedInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+                <Slider x:Name="MainGreenInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+                <Slider x:Name="MainBlueInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+                <Slider x:Name="MainInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+            </StackPanel>
+
+            <!-- Original Image -->
+            <Image x:Name="OriginalImage" Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
+
+            <!-- Interfered Image -->
+            <Image x:Name="InterferedImage" Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
         </Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-    <TextBlock Text="Interference Settings" Margin="10"/>
-    <Slider x:Name="MainRedInterferenceSlider" Header="Red" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
-    <Slider x:Name="MainGreenInterferenceSlider" Header="Green" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
-    <Slider x:Name="MainBlueInterferenceSlider" Header="Blue" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
-</StackPanel>
     </Grid>
 </Window>

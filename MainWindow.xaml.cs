@@ -7,10 +7,17 @@ namespace AVSP
     public partial class MainWindow : Window
     {
         private string? selectedImagePath;
+        private OscilloscopeWindow oscilloscopeWindow; // Declare oscilloscopeWindow as a class-level variable
 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainInterferenceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            double newValue = e.NewValue;
+            UpdateInterferenceSettings(newValue);
         }
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
@@ -46,7 +53,7 @@ namespace AVSP
         {
             if (!string.IsNullOrEmpty(selectedImagePath))
             {
-                OscilloscopeWindow oscilloscopeWindow = new OscilloscopeWindow(selectedImagePath);
+                oscilloscopeWindow = new OscilloscopeWindow(selectedImagePath);
                 oscilloscopeWindow.Show();
             }
             else
@@ -65,6 +72,14 @@ namespace AVSP
             catch (Exception ex)
             {
                 MessageBox.Show($"Error displaying image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void UpdateInterferenceSettings(double newValue)
+        {
+            if (oscilloscopeWindow != null)
+            {
+                oscilloscopeWindow.UpdateRedInterference((int)newValue);
             }
         }
     }

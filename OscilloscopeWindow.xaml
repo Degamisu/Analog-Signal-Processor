@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Oscilloscope" Height="400" Width="600">
     <Grid>
-        <!-- Your oscilloscope visualization goes here -->
-        <!-- You can use a Canvas, Plot control, or other graphical elements -->
+        <Slider x:Name="MainInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+
+        <!-- Add a Canvas to display the generated signal -->
+        <Canvas x:Name="OscilloscopeCanvas" />
     </Grid>
-<window>
+</Window>
