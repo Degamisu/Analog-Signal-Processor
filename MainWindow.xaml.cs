@@ -29,22 +29,6 @@ namespace AVSP
             }
         }
 
-        private void DisplayImage(string imagePath)
-        {
-            try
-            {
-                // Your image display logic goes here
-                // For simplicity, you can open a new window with an image viewer
-                ImageViewerWindow imageViewer = new ImageViewerWindow(imagePath);
-                imageViewer.Show();
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions, e.g., file not found, invalid image format, etc.
-                MessageBox.Show($"Error displaying image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             // Close the application
@@ -64,6 +48,21 @@ namespace AVSP
                 MessageBox.Show("Please open a file first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void OpenOscilloscope_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the OscilloscopeWindow and pass the stored image path
+            if (!string.IsNullOrEmpty(selectedImagePath))
+            {
+                OscilloscopeWindow oscilloscopeWindow = new OscilloscopeWindow(selectedImagePath);
+                oscilloscopeWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please open a file first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void DisplayImage(string imagePath)
         {
             try
@@ -72,22 +71,12 @@ namespace AVSP
                 // For simplicity, you can open a new window with an image viewer
                 ImageViewerWindow imageViewer = new ImageViewerWindow(imagePath);
                 imageViewer.Show();
-
-                // Open the OscilloscopeWindow
-                OpenOscilloscopeWindow();
             }
             catch (Exception ex)
             {
                 // Handle exceptions, e.g., file not found, invalid image format, etc.
                 MessageBox.Show($"Error displaying image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void OpenOscilloscopeWindow()
-        {
-            // Open the OscilloscopeWindow
-            OscilloscopeWindow oscilloscopeWindow = new OscilloscopeWindow();
-            oscilloscopeWindow.Show();
         }
     }
 }

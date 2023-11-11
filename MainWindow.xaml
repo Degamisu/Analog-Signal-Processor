@@ -16,6 +16,8 @@
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Image Viewer" Click="OpenImageViewer_Click"/>
+                <!-- Add the OscilloscopeWindow to the View menu -->
+                <MenuItem Header="Oscilloscope" Click="OpenOscilloscope_Click"/>
             </MenuItem>
         </Menu>
 
