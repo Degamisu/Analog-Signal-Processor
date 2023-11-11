@@ -10,12 +10,12 @@ namespace AVSP
 {
     public partial class OscilloscopeWindow : Window
     {
-        private int redInterference;
-        private int greenInterference;
-        private int blueInterference;
-        private BitmapImage oscilloscopeBitmap;
-        private Canvas oscilloscopeCanvas = new Canvas();
-        private string selectedImagePath;
+        public int redInterference;
+        public int greenInterference;
+        public int blueInterference;
+        public BitmapImage oscilloscopeBitmap;
+        public Canvas oscilloscopeCanvas = new Canvas();
+        public string selectedImagePath;
 
         // Corrected constructor
         public OscilloscopeWindow(string imagePath, int redInterference = 0, int greenInterference = 0, int blueInterference = 0)
@@ -39,7 +39,7 @@ namespace AVSP
             ConvertImageToAnalogSignal(oscilloscopeBitmap);
         }
 
-        private async Task GenerateSignalMessage()
+        public async Task GenerateSignalMessage()
         {
             // Delay for a short time before showing the message
             await Task.Delay(1000); // Adjust the delay duration as needed
@@ -48,7 +48,7 @@ namespace AVSP
             MessageBox.Show("Generating Signal (This may take a while)", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void ConvertImageToAnalogSignal(BitmapImage bitmap)
+        public void ConvertImageToAnalogSignal(BitmapImage bitmap)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace AVSP
         }
 
 
-        private void ApplyInterferenceSettings(BitmapImage bitmap)
+        public void ApplyInterferenceSettings(BitmapImage bitmap)
         {
             int pixelWidth = 0;
             int pixelHeight = 0;
@@ -136,7 +136,7 @@ namespace AVSP
         }
 
 
-        private Color ApplyInterference(Color originalColor)
+        public Color ApplyInterference(Color originalColor)
         {
             int red = (originalColor.R + redInterference) % 256;
             int green = (originalColor.G + greenInterference) % 256;
@@ -145,7 +145,7 @@ namespace AVSP
             return Color.FromRgb((byte)red, (byte)green, (byte)blue);
         }
 
-        private void DrawPixel(int x, int y, Color color, Canvas canvas)
+        public void DrawPixel(int x, int y, Color color, Canvas canvas)
         {
             if (canvas != null)
             {
@@ -169,7 +169,7 @@ namespace AVSP
             }
         }
 
-        private double MapColorToVoltage(Color color)
+        public double MapColorToVoltage(Color color)
         {
             return (color.R + color.G + color.B) / 3.0;
         }
@@ -186,7 +186,7 @@ namespace AVSP
             mainWindow?.UpdateInterferenceSettings(e.NewValue);
         }
 
-        private Color GetPixelColor(BitmapImage bitmap, int x, int y)
+        public Color GetPixelColor(BitmapImage bitmap, int x, int y)
         {
             int stride = 0;
             byte[] pixelData = null;

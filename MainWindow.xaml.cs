@@ -1,86 +1,111 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace AVSP
 {
     public partial class MainWindow : Window
     {
-        private string? selectedImagePath;
-        private OscilloscopeWindow oscilloscopeWindow; // Declare oscilloscopeWindow as a class-level variable
+        private string openedImagePath;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void MainInterferenceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            double newValue = e.NewValue;
-            UpdateInterferenceSettings(newValue);
-        }
-
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*";
 
             if (openFileDialog.ShowDialog() == true)
             {
-                selectedImagePath = openFileDialog.FileName;
-                DisplayImage(selectedImagePath);
-            }
-        }
+                openedImagePath = openFileDialog.FileName;
 
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+                // Display the original image
+                DisplayImage(openedImagePath, OriginalImage);
+
+                // Update interference settings and display the interfered image
+                UpdateInterferenceSettings();
+            }
         }
 
         private void OpenImageViewer_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(selectedImagePath))
+            if (!string.IsNullOrEmpty(openedImagePath))
             {
-                ImageViewerWindow imageViewer = new ImageViewerWindow(selectedImagePath);
+                ImageViewerWindow imageViewer = new ImageViewerWindow(openedImagePath);
                 imageViewer.Show();
             }
             else
             {
-                MessageBox.Show("Please open a file first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Open an image first before opening the image viewer.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
         private void OpenOscilloscope_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(selectedImagePath))
+            if (!string.IsNullOrEmpty(openedImagePath))
             {
-                oscilloscopeWindow = new OscilloscopeWindow(selectedImagePath);
-                oscilloscopeWindow.Show();
+                OscilloscopeWindow oscilloscope = new OscilloscopeWindow(openedImagePath);
+                oscilloscope.Show();
             }
             else
             {
-                MessageBox.Show("Please open a file first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Open an image first before opening the oscilloscope.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        private void DisplayImage(string imagePath)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            Application.Current.Shutdown();
+        }
+
+        private void MainInterferenceSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UpdateInterferenceSettings();
+        }
+
+        private void UpdateInterferenceSettings()
+        {
+            int redInterference = (int)MainRedInterferenceSlider.Value;
+            int greenInterference = (int)MainGreenInterferenceSlider.Value;
+            int blueInterference = (int)MainBlueInterferenceSlider.Value;
+
+            // Update the interference settings in other windows
+            ImageViewerWindow?.UpdateInterferenceSettings(redInterference, greenInterference, blueInterference);
+            OscilloscopeWindow?.UpdateInterferenceSettings(redInterference, greenInterference, blueInterference);
+
+            // Display the interfered image
+            DisplayInterferedImage();
+        }
+
+        private void DisplayImage(string imagePath, System.Windows.Controls.Image imageControl)
+        {
+            BitmapImage bitmap = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+            imageControl.Source = bitmap;
+        }
+
+        private void DisplayInterferedImage()
+        {
+            if (!string.IsNullOrEmpty(openedImagePath))
             {
-                ImageViewerWindow imageViewer = new ImageViewerWindow(imagePath);
-                imageViewer.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error displaying image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                int redInterference = (int)MainRedInterferenceSlider.Value;
+                int greenInterference = (int)MainGreenInterferenceSlider.Value;
+                int blueInterference = (int)MainBlueInterferenceSlider.Value;
+
+                // Apply interference to the image
+                BitmapImage interferedBitmap = ImageProcessor.ApplyInterference(openedImagePath, redInterference, greenInterference, blueInterference);
+
+                // Display the interfered image
+                DisplayImage(interferedBitmap, InterferedImage);
             }
         }
 
-        public void UpdateInterferenceSettings(double newValue)
+        private void DisplayImage(BitmapImage bitmap, System.Windows.Controls.Image imageControl)
         {
-            if (oscilloscopeWindow != null)
-            {
-                oscilloscopeWindow.UpdateRedInterference((int)newValue);
-            }
+            imageControl.Source = bitmap;
         }
     }
 }
