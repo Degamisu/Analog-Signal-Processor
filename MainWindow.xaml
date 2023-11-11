@@ -8,21 +8,20 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Toolbar at the top -->
-        <ToolBarTray>
-            <ToolBar>
-                <Button Content="Open" Click="OpenButton_Click"/>
-            </ToolBar>
-        </ToolBarTray>
+        <!-- Main menu -->
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Click="OpenButton_Click"/>
+                <MenuItem Header="Exit" Click="ExitButton_Click"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Image Viewer" Click="OpenImageViewer_Click"/>
+            </MenuItem>
+        </Menu>
 
         <!-- Main content grid with two columns -->
         <Grid Grid.Row="1" Background="#FF303437">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <Image x:Name="SelectedImage" HorizontalAlignment="Right" VerticalAlignment="Center" Stretch="Uniform" Grid.Column="1"/>
+            <!-- Your main content goes here -->
         </Grid>
     </Grid>
 </Window>

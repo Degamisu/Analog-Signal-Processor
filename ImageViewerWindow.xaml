@@ -1,0 +1,9 @@
+<Window x:Class="AVSP.ImageViewerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Image Viewer" Height="400" Width="600">
+    <Grid>
+        <!-- Image control to display the image -->
+        <Image x:Name="ImageView" Source="{Binding ImageSource}" Stretch="Uniform"/>
+    </Grid>
+</Window>

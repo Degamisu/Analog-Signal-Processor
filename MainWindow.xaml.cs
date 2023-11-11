@@ -1,28 +1,31 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace AVSP
 {
     public partial class MainWindow : Window
     {
+        // Store the selected image path
+        private string selectedImagePath;
+
         public MainWindow()
         {
             InitializeComponent();
             // Add any other initialization logic here
         }
 
-        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog();
 
             if (openFileDialog.ShowDialog() == true)
             {
-                string imagePath = openFileDialog.FileName;
+                // Store the selected image path
+                selectedImagePath = openFileDialog.FileName;
 
                 // Display the selected image
-                DisplayImage(imagePath);
+                DisplayImage(selectedImagePath);
             }
         }
 
@@ -30,14 +33,10 @@ namespace AVSP
         {
             try
             {
-                // Create a BitmapImage and set its source to the selected image path
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(imagePath, UriKind.RelativeOrAbsolute);
-                bitmap.EndInit();
-
-                // Set the Image control's source to the BitmapImage
-                SelectedImage.Source = bitmap;
+                // Your image display logic goes here
+                // For simplicity, you can open a new window with an image viewer
+                ImageViewerWindow imageViewer = new ImageViewerWindow(imagePath);
+                imageViewer.Show();
             }
             catch (Exception ex)
             {
@@ -46,10 +45,49 @@ namespace AVSP
             }
         }
 
-        private void OpenButton_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            // Trigger the file open action here
-            BrowseButton_Click(sender, e); // For simplicity, reuse the existing method
+            // Close the application
+            Close();
+        }
+
+        private void OpenImageViewer_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the image viewer window and pass the stored image path
+            if (!string.IsNullOrEmpty(selectedImagePath))
+            {
+                ImageViewerWindow imageViewer = new ImageViewerWindow(selectedImagePath);
+                imageViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please open a file first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void DisplayImage(string imagePath)
+        {
+            try
+            {
+                // Your image display logic goes here
+                // For simplicity, you can open a new window with an image viewer
+                ImageViewerWindow imageViewer = new ImageViewerWindow(imagePath);
+                imageViewer.Show();
+
+                // Open the OscilloscopeWindow
+                OpenOscilloscopeWindow();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, e.g., file not found, invalid image format, etc.
+                MessageBox.Show($"Error displaying image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenOscilloscopeWindow()
+        {
+            // Open the OscilloscopeWindow
+            OscilloscopeWindow oscilloscopeWindow = new OscilloscopeWindow();
+            oscilloscopeWindow.Show();
         }
     }
 }
