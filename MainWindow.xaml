@@ -26,9 +26,10 @@
             <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
                 <TextBlock Text="Interference Settings" Foreground="White"/>
                 <Slider x:Name="MainRedInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
-                <Slider x:Name="MainGreenInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
-                <Slider x:Name="MainBlueInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
-                <Slider x:Name="MainInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+                    <Slider x:Name="MainGreenInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+                    <Slider x:Name="MainBlueInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+                    <Slider x:Name="MainInterferenceSlider" Minimum="0" Maximum="255" Value="0" ValueChanged="MainInterferenceSlider_ValueChanged"/>
+
             </StackPanel>
 
             <!-- Original Image -->
